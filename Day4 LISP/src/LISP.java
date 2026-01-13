@@ -1,7 +1,7 @@
 import Expression.Node;
 import Visitors.EvaluatorVisitor;
 
-public class Main {
+public class LISP {
     public static void main(String[] args) {
         Parser p = new Parser();
         EvaluatorVisitor ev = new EvaluatorVisitor();
@@ -16,7 +16,7 @@ public class Main {
         Node n3 = p.parse("( + a ( * a 3 ) )");
         System.out.println(n3.accpet(ev));
 
-        Node n4 = p.parse("( if ( > a 9 ) )");
+        Node n4 = p.parse("( if ( > a ( + 1 9 ) ) )");
         System.out.println(n4.accpet(ev));
 
 

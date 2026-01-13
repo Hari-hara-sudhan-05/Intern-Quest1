@@ -12,7 +12,7 @@ public class Parser {
     int pos;
 
     Node parse(String s){
-        lst = Arrays.asList(s.split("\\s+"));
+        lst = Arrays.asList(s.trim().split("\\s+"));
         pos = 0;
         return makeTree();
     }
