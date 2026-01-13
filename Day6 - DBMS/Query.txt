@@ -1,7 +1,20 @@
 1)
 Select 
   Sum(oi.quantity * p.Price)
+From Seller s
+join Product_items pi
+on pi.seller_id = s.seller_id
+join order_items oi 
+on oi.product_id = pi.product_id
+join products p 
+on p.id = pi.product_id
+join Orders o
+on o.id = oi.order_id
+where o.date between 12/1/1 AND 12.2/1;
 
+2)
+Select 
+  Sum(oi.quantity * p.Price)
 From Seller s
 join Product_items pi
 on pi.seller_id = s.seller_id
@@ -12,4 +25,5 @@ on p.id = pi.product_id
 join Orders o
 on o.id = oi.order_id
 where o.date between 12/1/1 AND 12.2/1
-Group by oi.quantity;
+group by pi.seller_id
+order by desc limit 10;
