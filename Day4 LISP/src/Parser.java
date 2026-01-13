@@ -1,3 +1,6 @@
+import Expression.Node;
+import Expression.NodeFactory;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

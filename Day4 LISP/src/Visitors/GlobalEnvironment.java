@@ -1,5 +1,6 @@
-import java.util.HashMap;
+package Visitors;
 
+import java.util.HashMap;
 public class GlobalEnvironment {
 
     static volatile GlobalEnvironment instance;

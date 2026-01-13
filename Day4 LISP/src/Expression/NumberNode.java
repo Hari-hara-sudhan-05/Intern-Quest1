@@ -1,3 +1,6 @@
+package Expression;
+import Visitors.VisitorPattern;
+
 public class NumberNode implements Node{
     String n;
 
@@ -5,7 +8,7 @@ public class NumberNode implements Node{
         this.n = n;
     }
 
-    String getNumber(){
+    public String getNumber(){
         return n;
     }
 

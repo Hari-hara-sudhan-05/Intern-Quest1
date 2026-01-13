@@ -1,4 +1,11 @@
+package Visitors;
+
+import Expression.ListNode;
+import Expression.Node;
+import Expression.NumberNode;
+import Expression.SymbolNode;
 import java.util.List;
+
 
 public class EvaluatorVisitor implements VisitorPattern{
 

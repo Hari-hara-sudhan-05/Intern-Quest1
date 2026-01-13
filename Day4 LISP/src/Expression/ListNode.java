@@ -1,3 +1,6 @@
+package Expression;
+
+import Visitors.VisitorPattern;
 import java.util.List;
 
 public class ListNode implements Node{
@@ -8,7 +11,7 @@ public class ListNode implements Node{
         this.lst = lst;
     }
 
-    List<Node> getList(){
+    public List<Node> getList(){
         return lst;
     }
 

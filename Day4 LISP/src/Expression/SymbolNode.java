@@ -1,3 +1,7 @@
+package Expression;
+
+import Visitors.VisitorPattern;
+
 public class SymbolNode implements Node{
     String n;
 
@@ -5,7 +9,7 @@ public class SymbolNode implements Node{
         this.n = n;
     }
 
-    String getSymbol(){
+    public String getSymbol(){
         return n;
     }
 
