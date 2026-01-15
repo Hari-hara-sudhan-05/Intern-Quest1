@@ -55,18 +55,36 @@ public class EvaluatorVisitor implements VisitorPattern{
             return Integer.parseInt(left) > Integer.parseInt(right) ? "1":"0";
         }
 
+        int ans = Integer.parseInt(lst.get(1).accpet(this));
         switch (op) {
             case "+":
-                return String.valueOf(Integer.parseInt(left) + Integer.parseInt(right));
+                for(int i=2;i<lst.size();i++){
+                    String n = lst.get(i).accpet(this);
+                    ans += Integer.parseInt(n);
+                }
+                break;
             case "-":
-                return String.valueOf(Integer.parseInt(left) - Integer.parseInt(right));
+                for(int i=2;i<lst.size();i++){
+                    String n = lst.get(i).accpet(this);
+                    ans -= Integer.parseInt(n);
+                }
+                break;
             case "*":
-                return String.valueOf(Integer.parseInt(left) * Integer.parseInt(right));
+                for(int i=2;i<lst.size();i++){
+                    String n = lst.get(i).accpet(this);
+                    ans *= Integer.parseInt(n);
+                }
+                break;
             case "/":
-                return String.valueOf(Integer.parseInt(left) / Integer.parseInt(right));
+                for(int i=2;i<lst.size();i++){
+                    String n = lst.get(i).accpet(this);
+                    if(n.equals("0")) return "Cannot divide by zero";
+                    ans /= Integer.parseInt(n);
+                }
+                break;
         }
 
-        return null;
+        return String.valueOf(ans);
     }
 
 }
