@@ -44,22 +44,7 @@ public class EvaluatorVisitor implements VisitorPattern{
         }
 
         if(opNode instanceof SymbolNode sym2 && sym2.getSymbol().equals("if")){
-            if(lst.size()==2){
-                String cond = lst.get(1).accpet(this);
-                return cond;
-            }
-
-            if(lst.size()==3){
-                String cond = lst.get(1).accpet(this);
-                if(cond.equals("1")) return lst.get(2).accpet(this);
-                return "0";
-            }
-
-            String cond = lst.get(1).accpet(this);
-            if(cond.equals("1")){
-                return lst.get(2).accpet(this);
-            }
-            return lst.get(3).accpet(this);
+            return lst.get(1).accpet(this);
         }
 
         String op = opNode.accpet(this);
