@@ -6,7 +6,7 @@ public class LISP {
         Parser p = new Parser();
         EvaluatorVisitor ev = new EvaluatorVisitor();
 
-        Node n1 = p.parse("( + 1 2 0 4 5 )");
+        Node n1 = p.parse("( / 1 2 0 4 5 )");
         System.out.println(n1.accpet(ev));
 
         Node n2 = p.parse("( define a 10 )");
