@@ -15,8 +15,11 @@ public class LISP {
         Node n3 = p.parse("( + a ( * a 3 6 ) )");
         System.out.println(n3.accpet(ev));
 
-        Node n4 = p.parse("( if ( > a ( + a 2 ) ) )");
+        Node n4 = p.parse("( if ( < a ( + a 2 ) ) )");
         System.out.println(n4.accpet(ev));
+
+        Node n5 = p.parse("( sin ( + ( sin 90 ) ( cos 90 ) ) )");
+        System.out.println(n5.accpet(ev));
 
     }
 }

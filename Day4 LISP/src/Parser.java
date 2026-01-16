@@ -38,7 +38,12 @@ public class Parser {
             Integer.parseInt(s);
             return f.makeNumber(s);
         } catch (Exception e) {
-            return f.makeSymbol(s);
+            try {
+                Double.parseDouble(s);
+                return f.makeNumber(s);
+            }catch (Exception e1) {
+                return f.makeSymbol(s);
+            }
         }
     }
 
