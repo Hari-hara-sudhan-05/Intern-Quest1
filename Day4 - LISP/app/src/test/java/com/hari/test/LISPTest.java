@@ -1,14 +1,14 @@
-package con.hari.test;
+package com.hari.test;
 
 import com.hari.expression.Node;
-import com.hari.junit.jupiter.params.ParameterizedTest;
-import com.hari.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import com.hari.visitors.EvaluatorVisitor;
-import com.hari.junit.jupiter.api.Test;
-import com.hari.junit.jupiter.api.BeforeEach;
-import com.hari.lisp.Parser;
+import com.hari.parser.Parser;
 
-import static com.hari.junit.jupiter.api.Assertions.*;
 
 public class LISPTest {
 

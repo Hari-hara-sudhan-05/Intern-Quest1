@@ -1,7 +1,8 @@
-package com.hari.lisp;
+package com.hari;
 
 import com.hari.expression.Node;
 import com.hari.visitors.EvaluatorVisitor;
+import com.hari.parser.Parser;
 import java.util.Scanner;
 
 public class LISP {
@@ -20,9 +21,9 @@ public class LISP {
             }
             try{
                 Node n = p.parse(input);
-                System.out.println(n.accept(ev))
+                System.out.println(n.accept(ev));
             }catch (Exception e){
-                System.out.println(e);
+                System.out.println(e.getMessage());
             }
         }
 
