@@ -11,7 +11,7 @@ public class GlobalEnvironment {
     GlobalEnvironment() {
     }
 
-    static GlobalEnvironment getInstance() {
+    public static GlobalEnvironment getInstance() {
         if (instance == null) {
             synchronized (GlobalEnvironment.class) {
                 if (instance == null) {
@@ -22,11 +22,11 @@ public class GlobalEnvironment {
         return instance;
     }
 
-    void addVariable(String s, String o) {
+    public void addVariable(String s, String o) {
         symbolMap.put(s, o);
     }
 
-    String getVariable(String s) {
+    public String getVariable(String s) {
         return symbolMap.get(s);
     }
 }
