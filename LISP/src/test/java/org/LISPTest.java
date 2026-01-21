@@ -33,9 +33,9 @@ public class LISPTest {
     }
     @Test
     public void testDiv(){
-        String input = "( / 2 2 )";
+        String input = "( / 4 -5 )";
         Node node = parser.parse(input);
-        assertEquals(1,Integer.parseInt(node.accept(evaluatorVisitor)));
+        assertEquals(0,Integer.parseInt(node.accept(evaluatorVisitor)));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class LISPTest {
     public void testDefine(){
         String input = "( define a ( sin 0 ) )";
         Node node = parser.parse(input);
-        assertEquals("0.0",node.accept(evaluatorVisitor));
+        assertNull(node.accept(evaluatorVisitor));
     }
 
 }

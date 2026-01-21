@@ -1,29 +1,55 @@
 1)
-Select 
-  Sum(oi.quantity * p.Price)
-From Seller s
-join Product_items pi
-on pi.seller_id = s.seller_id
-join order_items oi 
-on oi.product_id = pi.product_id
-join products p 
-on p.id = pi.product_id
-join Orders o
-on o.id = oi.order_id
-where o.date between 12/1/1 AND 12.2/1;
+(i)
+SELECT 
+    s.id AS seller_id,
+    SUM(oi.quantity * p.price) AS total_revenue
+FROM sellers s
+JOIN products_items pi  ON pi.seller_id = s.id
+JOIN order_items oi      ON oi.product_id = pi.product_id
+JOIN products p          ON p.id = pi.product_id
+JOIN orders o            ON o.id = oi.order_id
+WHERE o.date BETWEEN 1/1/26 AND 2/1/26
+GROUP BY s.id;
+
+
+(ii)
+SELECT 
+    s.id AS seller_id,
+    p.id AS product_id,
+    SUM(oi.quantity * p.price) AS revenue
+FROM sellers s
+JOIN products_items pi  ON pi.seller_id = s.id
+JOIN order_items oi      ON oi.product_id = pi.product_id
+JOIN products p          ON p.id = pi.product_id
+JOIN orders o            ON o.id = oi.order_id
+GROUP BY s.id, p.id
+ORDER BY s.id, revenue DESC
+LIMIT 10;
+
 
 2)
-Select 
-  Sum(oi.quantity * p.Price)
-From Seller s
-join Product_items pi
-on pi.seller_id = s.seller_id
-join order_items oi 
-on oi.product_id = pi.product_id
-join products p 
-on p.id = pi.product_id
-join Orders o
-on o.id = oi.order_id
-where o.date between 12/1/1 AND 12.2/1
-group by pi.seller_id
-order by desc limit 10;
+(i)
+SELECT 
+    c.id AS category_id,
+    c.name AS category_name,
+    SUM(oi.quantity * p.price) AS total_spend
+FROM order_items oi
+JOIN products p      ON p.id = oi.product_id
+JOIN categories c    ON c.id = p.category_id
+JOIN orders o        ON o.id = oi.order_id
+GROUP BY c.id, c.name
+ORDER BY total_spend DESC
+LIMIT 1;
+
+
+(ii)
+SELECT 
+    p.id AS product_id,
+    p.name,
+    SUM(oi.quantity * p.price) AS total_sales_value
+FROM order_items oi
+JOIN products p      ON p.id = oi.product_id
+JOIN orders o        ON o.id = oi.order_id
+GROUP BY p.id, p.name
+ORDER BY total_sales_value DESC
+LIMIT 10;

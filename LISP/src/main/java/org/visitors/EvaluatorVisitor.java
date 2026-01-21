@@ -72,7 +72,7 @@ public class EvaluatorVisitor implements Visitor {
         String name = ((SymbolNode) lst.get(1)).getSymbol();
         String val = lst.get(2).accept(this);
         e.addVariable(name, val);
-        return val;
+        return null;
     }
 
     private boolean isRelationalOperator(String s) {
