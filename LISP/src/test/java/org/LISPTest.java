@@ -1,6 +1,8 @@
 package org;
 
 import org.expression.Node;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.visitors.EvaluatorVisitor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,61 +20,55 @@ public class LISPTest {
         evaluatorVisitor = new EvaluatorVisitor();
     }
 
-    @Test
-    public void testAdd(){
-        String input = "( + 2 3 4 6 )";
+    @ParameterizedTest
+    @CsvSource({
+            "'( + 2 3 4 6 )', 15",
+            "'( - ( + 2 3 ) ( - 3 4 ) )', 6",
+            "'( * ( * 2 3 ) ( * 4 6 ) )', 144"
+    })
+    void testArithmetic(String input,int expected){
         Node node = parser.parse(input);
-        assertEquals(15,Integer.parseInt(node.accept(evaluatorVisitor)));
+        assertEquals(expected,Integer.parseInt(node.accept(evaluatorVisitor)));
     }
 
-    @Test
-    public void testSub(){
-        String input = "( - ( + 2 3 ) ( - 3 4 ) )";
+    @ParameterizedTest
+    @CsvSource({
+            "'( / 2 0 )'",
+            "'( / ( sin 90 ) 0 )'"
+    })
+    void testDivZero(String input) {
         Node node = parser.parse(input);
-        assertEquals(6,Integer.parseInt(node.accept(evaluatorVisitor)));
-    }
-    @Test
-    public void testDiv(){
-        String input = "( / 4 -5 )";
-        Node node = parser.parse(input);
-        assertEquals(0,Integer.parseInt(node.accept(evaluatorVisitor)));
+        assertThrows(ArithmeticException.class, () -> node.accept(evaluatorVisitor));
     }
 
-    @Test
-    public void testDivByZero(){
-        String input = "( / 2 0 )";
+    @ParameterizedTest
+    @CsvSource({
+            "'( sin ( + ( sin 90 ) 2 ) )', 0.9092974268256817"
+    })
+    void testTrig(String input, double expected) {
         Node node = parser.parse(input);
-        assertThrows(ArithmeticException.class,()->{
-            node.accept(evaluatorVisitor);
-        });
+        assertEquals(expected, Double.parseDouble(node.accept(evaluatorVisitor)), 1e-9);
     }
 
-    @Test
-    public void testMul(){
-        String input = "( * ( * 2 3 ) ( * 4 6 ) )";
+    @ParameterizedTest
+    @CsvSource({
+            "'( if ( > ( + 1 2 ) 1 ) )', '1'"
+    })
+    void testRelational(String input, String expected) {
         Node node = parser.parse(input);
-        assertEquals(144,Integer.parseInt(node.accept(evaluatorVisitor)));
-    }
-    @Test
-    public void testTrig(){
-        String input = "( sin ( + ( sin 90 ) 2 ) )";
-        Node node = parser.parse(input);
-        assertEquals(0.9092974268256817,Double.parseDouble(node.accept(evaluatorVisitor)));
+        assertEquals(expected, node.accept(evaluatorVisitor));
     }
 
-    @Test
-    public void testRelational(){
-        String input = "( if ( > ( + 1 2 ) 1 ) )";
-        Node node = parser.parse(input);
-        assertEquals("1",node.accept(evaluatorVisitor));
-    }
 
-    @Test
-    public void testDefine(){
-        String input = "( define a ( sin 0 ) )";
+    @ParameterizedTest
+    @CsvSource({
+            "'( define a ( sin 0 ) )'"
+    })
+    void testDefine(String input) {
         Node node = parser.parse(input);
         assertNull(node.accept(evaluatorVisitor));
     }
+
 
 }
 
