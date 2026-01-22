@@ -13,11 +13,15 @@ import java.util.List;
 public class EvaluatorVisitor implements Visitor {
 
     GlobalEnvironment e = GlobalEnvironment.getInstance();
-    static List<String> lst = new ArrayList<>(Arrays.asList("+", "-", "*", "/", ">", "<", ">=", "<=", "if", "sin", "cos", "tan", "sec", "cosec", "cot"));
-    static List<String> trigLst = new ArrayList<>(Arrays.asList("sin", "cos", "tan", "sec", "cosec", "cot"));
-    static List<String> relationalLst = new ArrayList<>(Arrays.asList(">", "<", ">=", "<="));
-    static List<String> arithmeticLst = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
-
+    private static final List<String> lst = new ArrayList<>(Arrays.asList("+", "-", "*", "/", ">", "<", ">=", "<=", "if", "sin", "cos", "tan", "sec", "cosec", "cot"));
+    private static final List<String> trigLst = new ArrayList<>(Arrays.asList("sin", "cos", "tan", "sec", "cosec", "cot"));
+    private static final List<String> relationalLst = new ArrayList<>(Arrays.asList(">", "<", ">=", "<="));
+    private static final List<String> arithmeticLst = new ArrayList<>(Arrays.asList("+", "-", "*", "/"));
+    private static final String LITERAL_DEFINE = "define";
+    private static final String LITERAL_IF = "if";
+    private static final String LITERAL_INT_ZERO = "0";
+    private static final String LITERAL_DOUBLE_ZERO = "0.0";
+    private static final int MAXIMUM_LENGTH = 3;
 
     @Override
     public String visitNumber(NumberNode n) {
@@ -45,11 +49,11 @@ public class EvaluatorVisitor implements Visitor {
         Node opNode = lst.get(0);
         String op = opNode.accept(this);
 
-        if (opNode instanceof SymbolNode sym && sym.getSymbol().equals("define")) {
+        if (opNode instanceof SymbolNode sym && (LITERAL_DEFINE).equals(sym.getSymbol())) {
             return defineVariable(lst);
         }
 
-        if (opNode instanceof SymbolNode sym && sym.getSymbol().equals("if")) {
+        if (opNode instanceof SymbolNode sym && (LITERAL_IF).equals(sym.getSymbol())) {
             return lst.get(1).accept(this);
         }
 
@@ -89,7 +93,7 @@ public class EvaluatorVisitor implements Visitor {
 
     private String handleRelational(List<Node> lst) {
 
-        if (lst.size() > 3) throw new RuntimeException("Invalid expression");
+        if (lst.size() > MAXIMUM_LENGTH) throw new RuntimeException("Invalid expression");
 
         String op = lst.get(0).accept(this);
         String left = lst.get(1).accept(this);
@@ -136,7 +140,7 @@ public class EvaluatorVisitor implements Visitor {
             case "/":
                 for (int i = 2; i < lst.size(); i++) {
                     String n = lst.get(i).accept(this);
-                    if(n.equals("0.0") || n.equals("0")) throw new ArithmeticException("Divide by zero");
+                    if((LITERAL_DOUBLE_ZERO).equals(n) || (LITERAL_INT_ZERO).equals(n)) throw new ArithmeticException("Divide by zero");
                     ans /= Double.parseDouble(n);
                 }
                 break;

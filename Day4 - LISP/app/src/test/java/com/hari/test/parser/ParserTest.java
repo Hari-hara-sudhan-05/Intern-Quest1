@@ -12,9 +12,9 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ParserTest {
+class ParserTest {
 
-    Parser parser;
+    private Parser parser;
     @BeforeEach
     public void setUp(){
         parser = new Parser();
@@ -28,21 +28,28 @@ public class ParserTest {
     })
     void testAST(String input, int expectedSize, String expectedTypes) {
         Node n = parser.parse(input);
-        assertInstanceOf(ListNode.class, n);
+        assertAST(n,expectedSize,expectedTypes);
+    }
+
+    private void assertAST(Node n,int expectedSize,String expectedTypes){
+        assertInstanceOf(ListNode.class, n,"Root node should always be a ListNode ");
 
         ListNode lst = (ListNode) n;
-        assertEquals(expectedSize, lst.getList().size());
+        assertEquals(expectedSize, lst.getList().size(),"ListNode should contains "+ expectedSize +" elements");
 
         String[] types = expectedTypes.split(",");
         for (int i = 0; i < types.length; i++) {
-            Node child = lst.getList().get(i);
-            switch(types[i]) {
-                case "SymbolNode" -> assertInstanceOf(SymbolNode.class, child);
-                case "NumberNode" -> assertInstanceOf(NumberNode.class, child);
-                case "ListNode"   -> assertInstanceOf(ListNode.class, child);
-            }
+            assertNodeType(types[i],lst.getList().get(i),i);
         }
     }
 
+    private void assertNodeType(String expected,Node n,int index){
+        switch (expected){
+            case "SymbolNode" -> assertInstanceOf(SymbolNode.class,n,"Element "+index+" should be a SymbolNode");
+            case "ListNode" -> assertInstanceOf(ListNode.class,n,"Element "+index+" should be a ListNode");
+            case "NumberNode" -> assertInstanceOf(NumberNode.class,n,"Element "+index+" should be a NumberNode");
+            default -> fail("Unknown Type identified expected type is "+expected);
+        }
+    }
 
 }

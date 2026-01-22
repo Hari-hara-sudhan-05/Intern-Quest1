@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EvaluatorVisitorTest {
+class EvaluatorVisitorTest {
 
     Parser parser;
     EvaluatorVisitor evaluatorVisitor;
@@ -27,7 +27,7 @@ public class EvaluatorVisitorTest {
     })
     void testArithmetic(String input,int expected){
         Node node = parser.parse(input);
-        assertEquals(expected,Integer.parseInt(node.accept(evaluatorVisitor)));
+        assertEquals(expected,Integer.parseInt(node.accept(evaluatorVisitor)),"");
     }
 
     @ParameterizedTest
@@ -37,7 +37,7 @@ public class EvaluatorVisitorTest {
     })
     void testDivZero(String input) {
         Node node = parser.parse(input);
-        assertThrows(ArithmeticException.class, () -> node.accept(evaluatorVisitor));
+        assertThrows(ArithmeticException.class, () -> node.accept(evaluatorVisitor),"");
     }
 
     @ParameterizedTest
@@ -46,7 +46,7 @@ public class EvaluatorVisitorTest {
     })
     void testTrig(String input, double expected) {
         Node node = parser.parse(input);
-        assertEquals(expected, Double.parseDouble(node.accept(evaluatorVisitor)), 1e-9);
+        assertEquals(expected, Double.parseDouble(node.accept(evaluatorVisitor)), 1e-9,"");
     }
 
     @ParameterizedTest
@@ -55,7 +55,7 @@ public class EvaluatorVisitorTest {
     })
     void testRelational(String input, String expected) {
         Node node = parser.parse(input);
-        assertEquals(expected, node.accept(evaluatorVisitor));
+        assertEquals(expected, node.accept(evaluatorVisitor),"");
     }
 
 
@@ -65,7 +65,7 @@ public class EvaluatorVisitorTest {
     })
     void testDefine(String input) {
         Node node = parser.parse(input);
-        assertNull(node.accept(evaluatorVisitor));
+        assertNull(node.accept(evaluatorVisitor),"");
     }
 
 

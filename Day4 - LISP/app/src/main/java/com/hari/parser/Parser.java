@@ -9,13 +9,20 @@ import java.util.List;
 
 public class Parser {
 
+    private static final String OPEN_BRACKET = "(";
+    private static final String CLOSE_BRACKET = ")";
     NodeFactory f = new NodeFactory();
     List<String> lst;
     int pos;
 
-    public Node parse(String s) {
-        lst = Arrays.asList(s.trim().split("\\s+"));
+    public Parser(){
+        lst = new ArrayList<>();
         pos = 0;
+    }
+
+    public Node parse(String s) {
+        lst.addAll(Arrays.asList(s.trim().split("\\s+")));
+
         return makeTree();
     }
 
@@ -23,9 +30,9 @@ public class Parser {
         if (pos >= lst.size()) return null;
 
         String cur = lst.get(pos++);
-        if (cur.equals("(")) {
+        if ((OPEN_BRACKET).equals(cur)) {
             List<Node> items = new ArrayList<>();
-            while (pos < lst.size() && !lst.get(pos).equals(")")) {
+            while (pos < lst.size() && !(CLOSE_BRACKET).equals(lst.get(pos))) {
                 items.add(makeTree());
             }
             pos++;

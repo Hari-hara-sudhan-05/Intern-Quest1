@@ -2,6 +2,7 @@ package com.hari.expression;
 
 import com.hari.visitors.Visitor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListNode implements Node {
@@ -13,7 +14,7 @@ public class ListNode implements Node {
     }
 
     public List<Node> getList() {
-        return lst;
+        return new ArrayList<>(lst);
     }
 
     @Override

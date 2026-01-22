@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class GlobalEnvironmentTest {
+class GlobalEnvironmentTest {
 
     GlobalEnvironment env;
 
@@ -27,15 +27,12 @@ public class GlobalEnvironmentTest {
     })
     void testDefineAndGet(String input,String expected) {
         env.addVariable(input,expected);
-        assertEquals(expected, env.getVariable(input));
+        assertEquals(expected, env.getVariable(input),"Mapped variable "+input+" to "+expected);
     }
 
     @Test
     void testMissingKey() {
-        assertNull(env.getVariable("a"));
+        assertNull(env.getVariable("a"),"Key is missing");
     }
-
-
-
 
 }
